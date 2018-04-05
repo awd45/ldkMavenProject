@@ -1,6 +1,6 @@
 package com.ldk
 
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.SparkSession
 
 object Example_Join_ex {
   def main(args: Array[String]): Unit = {
@@ -8,8 +8,33 @@ object Example_Join_ex {
       config("spark.master", "local").
       getOrCreate()
 
-    var mainFile = "kopo_channel_seasonality_ex.csv"
-    var subFile = "kopo_product_mst.csv"
+    var staticUrl = "jdbc:oracle:thin:@192.168.110.111:1521/orcl"
+    var staticUser = "kopo"
+    var staticPw = "kopo"
+    var selloutDb = "KOPO_CHANNEL_SEASONALITY_NEW"
+    var sunDb = "KOPO_REGION_MST"
+
+    val mainDataDf = spark.read.format("jdbc").
+      options(Map("url" -> staticUrl, "dbtable" -> selloutDb, "user" -> staticUser, "password" -> staticPw)).load
+
+    val subDataDf = spark.read.format("jdbc").
+      options(Map("url" -> staticUrl, "dbtable" -> sunDb, "user" -> staticUser, "password" -> staticPw)).load
+
+    mainDataDf.createOrReplaceTempView("mainTable")
+
+    subDataDf.createOrReplaceTempView("subTable")
+
+
+    var resultDf = spark.sql("SELECT A.REGIONID, B.REGIONNAME, A.PRODUCT, A.YEARWEEK, A.QTY "+
+      "FROM mainTable A "+
+      "LEFT JOIN subTable B " +
+      "ON A.REGIONID = B.REGIONID");
+
+
+
+/*
+    var mainFile = "KOPO_CHANNEL_SEASONALITY_NEW.csv"
+    var subFile = " kopo_region_mst.csv"
     var dataPath = "c:/spark/bin/data/"
 
     // 상대경로 입력
@@ -22,13 +47,10 @@ object Example_Join_ex {
     subDataDf.createOrReplaceTempView("subTable")
 
     //a.productgroup b.productname
-    var test=spark.sql("select a.regionid, a.productgroup, b.productname, a.yearweek, a.qty " +
+    spark.sql("select a.regionid, a.product, a.yearweek, a.qty, b.regionname " +
       "from mainTable a " +
-      "inner join subTable b " +
-      "on a.productgroup = b.productid")
-
-
-    test.show()
-
+      "left join subTable b " +
+      "on a.regionid = b.regionid")
+*/
   }
 }
