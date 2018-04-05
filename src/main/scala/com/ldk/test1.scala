@@ -1,12 +1,13 @@
 package com.ldk
+
 import org.apache.spark.sql.SparkSession
+
 object test1 {
   def main(args: Array[String]): Unit = {
 
           val spark = SparkSession.builder().appName("hkProject").
             config("spark.master", "local").
             getOrCreate()
-
 
            // 접속정보 설정
         var staticUrl = "jdbc:oracle:thin:@192.168.110.111:1521/orcl"
@@ -22,7 +23,7 @@ object test1 {
 
            // 메모리 테이블 생성
            selloutDataFromPg.createOrReplaceTempView("selloutTable")
-           selloutDataFromPg.show(1)
+           selloutDataFromPg.show(20)
 
 
          }
