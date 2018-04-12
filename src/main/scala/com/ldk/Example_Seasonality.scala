@@ -26,9 +26,9 @@ object Example_Seasonality {
     selloutDf.createOrReplaceTempView("selloutTable")
     productMasterDf.createOrReplaceTempView("mstTable")
 
-    var middleResult = spark.sql("select " +
+    var rawData = spark.sql("select " +
       "concat(a.regionid,'_',a.product) as keycol," +
-      "a.regionid, " +
+      "a.regionid as accountid, " +
       "a.product, " +
       "a.yearweek, " +
       "a.qty, " +
@@ -36,6 +36,14 @@ object Example_Seasonality {
       "from selloutTable a " +
       "left join mstTable b " +
       "on a.product = b.product_id")
+
+    var rawDataColumns = rawData.columns
+    var keyNo = rawDataColumns.indexOf("keycol")
+    var accountidNo = rawDataColumns.indexOf("accountid")
+    var productNo = rawDataColumns.indexOf("product")
+    var yearweekNo = rawDataColumns.indexOf("yearweek")
+    var qtyNo = rawDataColumns.indexOf("qty")
+    var productnameNo = rawDataColumns.indexOf("productname")
   }
 }
 
