@@ -22,7 +22,7 @@ object Example_Seasonality {
     val productMasterDf = spark.read.format("jdbc").
       options(Map("url" -> staticUrl, "dbtable" -> productNameDb, "user" -> staticUser, "password" -> staticPw)).load
 
-    //가상의 테이블을 2개 만들어 담아준다.
+    //가상의 메모리테이블을 2개 만들어 담아준다.
     selloutDf.createOrReplaceTempView("selloutTable")
     productMasterDf.createOrReplaceTempView("mstTable")
   }
