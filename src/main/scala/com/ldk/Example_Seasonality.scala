@@ -13,7 +13,7 @@ object Example_Seasonality {
     var staticUser = "kopo"
     var staticPw = "kopo"
     var selloutDb = "KOPO_CHANNEL_SEASONALITY_NEW"
-    var productNameDb = "KOPO_PRODUCT_MASTER"
+    var productNameDb = "KOPO_PRODUCT_MST"
 
     //가져온 데이터를 아래 dataframe으로 저장하고 가져온다.
     val selloutDf = spark.read.format("jdbc").
@@ -25,6 +25,17 @@ object Example_Seasonality {
     //가상의 메모리테이블을 2개 만들어 담아준다.
     selloutDf.createOrReplaceTempView("selloutTable")
     productMasterDf.createOrReplaceTempView("mstTable")
+
+    var middleResult = spark.sql("select " +
+      "concat(a.regionid,'_',a.product) as keycol," +
+      "a.regionid, " +
+      "a.product, " +
+      "a.yearweek, " +
+      "a.qty, " +
+      "b.product_name " +
+      "from selloutTable a " +
+      "left join mstTable b " +
+      "on a.product = b.product_id")
   }
 }
 
