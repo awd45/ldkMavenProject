@@ -44,6 +44,34 @@ object Example_Seasonality {
     var yearweekNo = rawDataColumns.indexOf("yearweek")
     var qtyNo = rawDataColumns.indexOf("qty")
     var productnameNo = rawDataColumns.indexOf("productname")
+
+    var rawRdd = rawData.rdd
+
+
+    //(keycol, accountid, product, yearweek, qty, product_name)
+    var rawExRdd = rawRdd.filter(x=>{
+      var checkValid = true
+
+      //설정 부적합 로직
+      if(x.getString(3).length != 6){
+        checkValid = false;
+      }
+      checkValid
+    })
+
+    //  랜덤 디버깅 case #1
+    var x = rawRdd.first
+
+  /// 디버깅 case #2 (타겟팅 대상 선택)
+    var rawExRdd = rawRdd.filter(x=> {
+      var checkValid = false
+      if ((x.getString(accountidNo) == "A60") &&
+        (x.getString(productNo) == "PRODUCT34") &&
+        (x.getString(yearweekNo) == "201402")) {
+        checkValid = true
+      }
+      checkValid
+    })
   }
 }
 
