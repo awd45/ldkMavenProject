@@ -1,5 +1,7 @@
 package com.kopo
 
+import org.apache.spark.sql.SparkSession
+
 object Important_Code {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder().appName("mavenProject").

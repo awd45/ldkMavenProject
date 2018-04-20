@@ -59,6 +59,39 @@ object Example_Seasonality {
       checkValid
     })
 
+    //RDD 가공
+    //filteredRdd.first
+    // filteredRdd = (키, 지역, 상품 ,연주차 ,거래량, 상품이름 정보)
+
+    // 처리로직 : 거래량이 MAXVALUE 이상인건은 MAXVALUE로 치환한다.
+    var MAXVALUE = 700000
+
+    var mapRdd = filteredRdd.map(x=>{
+      //디버깅코드 : var x = mapRdd.filter(x=>{ x.getDouble(qtyNo) > 700000}).first
+      //로직구현예정
+      var org_qty = x.getDouble(qtyNo)
+      var new_qty = org_qty
+
+      if(new_qty > MAXVALUE){
+        new_qty = MAXVALUE
+      }
+      // 출력 Row 키, 연주차, 거래량정보_ㅐㄱㅎ, 거래량정보_NEW)
+      (x.getString(keyNo),
+        x.getString(yearweekNo),
+        org_qty,
+        new_qty
+      )
+
+
+      //Row를 쓰려면 임포트문이 필요했다. 이것은 구글에서 검색하려면 됌
+      import org.apache.spark.sql.Row
+      Row(x.getString(keyNo),
+        x.getString(yearweekNo),
+        org_qty,
+        new_qty
+      )
+    })
+
     //  랜덤 디버깅 case #1
     var x = rawRdd.first
 
