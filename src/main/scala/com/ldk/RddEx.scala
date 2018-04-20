@@ -1,8 +1,9 @@
 package com.ldk
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.types.{StringType, DoubleType,StructField, StructType}
 
-object Example_Seasonality {
+object RddEx {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder().appName("...").
       config("spark.master", "local").
@@ -47,32 +48,63 @@ object Example_Seasonality {
 
     var rawRdd = rawData.rdd
 
-
     //(keycol, accountid, product, yearweek, qty, product_name)
-    var rawExRdd = rawRdd.filter(x=>{
+    var filteredRdd = rawRdd.filter(x => {
+      //bolean = true
       var checkValid = true
 
-      //설정 부적합 로직
-      if(x.getString(3).length != 6){
+      //찾기 : yearweek, 인덱스로 주차정보만 인트타입으로 변환
+      var weekValue = x.getString(yearweekNo).substring(4).toInt
+
+      //비교한 후 주차정보가 53이상인 경우 레코드 삭제
+      if (weekValue >= 53) {
         checkValid = false;
       }
+
       checkValid
-    })
 
-    //  랜덤 디버깅 case #1
-    var x = rawRdd.first
+      var x = rawRdd.first
 
+      //설정 부적합 로직
+      if (x.getString(3).length != 6) {
+        checkValid = false;
+      }
 
-  /// 디버깅 case #2 (타겟팅 대상 선택)
-    var rawExRdd = rawRdd.filter(x=> {
-      var checkValid = false
-      if ((x.getString(accountidNo) == "A60") &&
-        (x.getString(productNo) == "PRODUCT34") &&
-        (x.getString(yearweekNo) == "201402")) {
-        checkValid = true
+      checkValid
+
+    // 분석대상 제품군 등록
+    var productArray = Array("PRODUCT", "PRODUCT2")
+    //세트 타입으로 변환
+    var productSet = productArray.toSet
+
+    var resultRdd = filteredRDD.filter(x => {
+      var checkValid = true
+
+      //데이터 특정 행의 product 컬럼인덱스를 활용하여 데이터 대입
+      var productInfo = x.getString(productNo);
+
+      if (productSet.contains(productInfo)) {
+        checkVlid = true
       }
       checkValid
-    })
+    )
+
+      //2번째 답!
+  if ((productInfo == "PRODUCT1")
+    (productInfo == "PRODUCT2"))
+    checkValid = true
   }
-}
+checkValid
+
+    val finalResultDf = spark.createDataFrame(resultRdd,
+      StructType(
+        Seq(
+          StructField("KEY", StringType),
+          StructField("REGIONID", StringType),
+          StructField("PRODUCT", StringType),
+          StructField("YEARWEEK", StringType),
+          StructField("VOLUME", StringType),
+          StructField("PRODUCT_NAME", StringType))))
+    )
+
 
