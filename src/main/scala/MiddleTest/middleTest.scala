@@ -15,7 +15,8 @@ object middleTest {
 
 
 
-    // 1번문제 로딩
+    // 1번문제 [로딩] poly_server2 (192.168.110.112) kopo 스키마에서 kopo_channel_seasonality_new 자료를 불러와서 데이터프레임에
+    // 저장한 후 2줄을 show 할 수 있는 코드를 작성한 후 show하는 코드에 주석처리만 하세요
     var staticUrl = "jdbc:oracle:thin:@192.168.110.112:1521/orcl"
 
     var staticUser = "kopo"
@@ -38,13 +39,15 @@ object middleTest {
     selloutDf.show(2)
 
 
-    //2번 답 SQL분석
+    //2번 답 [SQL분석] kopo_channel_seasonality_new의 qty값을 sparksql을 활용하여
+    // 1.2배 증가시킨 후 qty_new컬럼을 추가로 생성하는 코드를 작성한 후 코드에 주석처리만 하세요
     var middleResult = spark.sql("select regionid, product, yearweek, cast(qty as double), cast(QTY * 1.2 as double)AS QTY_NEW FROM selloutTable")
 
 
+    //3번 이클립스로 함수 만들기
 
-
-    //4번답 정제
+    //4번답 [정제] 2016년도 이상, 52주차 미포함, 프로덕트 정보가 (PRODUCT1, PRODCUT2)인 데이터만 남기는 코드를
+    //작성한 후 코드시작부분에 주석처리만 하세요
     var rawData = middleResult
     var rawDataColumns = rawData.columns.map(x=>{x.toLowerCase()})
 
@@ -90,7 +93,8 @@ object middleTest {
 
 
 
-    //5번 저장
+    //5번 [저장] 실습한 코드를 Prostgresql(192.168.110.111) 서버에 kopo_st_result_ldg 한 후 전체 코드를 "이동근_전체코드.scala"
+    //파일을 메일로 첨부하세요
     import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 
     val finalResultDf = spark.createDataFrame(filteredRdd2,
@@ -127,6 +131,13 @@ object middleTest {
     val table = "kopo_st_result_ldg"
 
     finalResultDf.write.mode("overwrite").jdbc(myUrl, table, prop)
+
+
+    //6.[시각화] 저장한 데이터를 oracle_visualization을 활용하여 상품별 거래량 정보가 시간 정보에 따라 라인 차트로 시각화 도디도록
+    //구성하여 캡쳐한 후 "이동근_6번답.jpg" 메일로 첨부하세요
+
+    //7.[보너스] KOSPI지수 나타내기
+    // 답은 innerjoin
 
   }
 }
