@@ -1,4 +1,4 @@
-package com.ldk
+package com.ldg
 
 /**
  * @author ${user.name}

@@ -1,4 +1,4 @@
-package com.ldk
+package com.ldg
 
 import org.apache.spark
 import org.apache.spark.sql.SparkSession

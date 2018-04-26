@@ -1,4 +1,4 @@
-package com.ldk
+package com.ldg
 
 object Example_Test {
   def main(args: Array[String]): Unit = {
