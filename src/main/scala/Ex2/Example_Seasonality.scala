@@ -68,6 +68,14 @@ object Example_Seasonality {
       checkValid
     })
 
+    //group by개념 분석대상을 그룹핑한다.
+    var  groupRdd = filteredRdd.
+    //분석 대상 키 정의 (거래처, 상품)
+    groupBy(x=>{ (x.getString(accountidNo), x.getString(productNo) ) } )
+
+
+
+
     //RDD 가공
     //filteredRdd.first
     // filteredRdd = (키, 지역, 상품 ,연주차 ,거래량, 상품이름 정보)
