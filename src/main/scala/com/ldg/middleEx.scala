@@ -2,7 +2,7 @@ package com.ldg
 
 import org.apache.spark
 
-object middle {
+object middleEx {
   def main(args: Array[String]): Unit = {
 // 2번
     var staticUrl = "jdbc:oracle:thin:@192.168.110.111:1521/orcl"

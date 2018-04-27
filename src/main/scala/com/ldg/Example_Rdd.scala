@@ -3,7 +3,7 @@ package com.ldg
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{StringType, DoubleType,StructField, StructType}
 
-object RddEx {
+object Example_Rdd {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder().appName("...").
       config("spark.master", "local").

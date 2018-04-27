@@ -2,7 +2,7 @@ package com.ldg
 
 import org.apache.spark.sql.SparkSession
 
-object test1 {
+object Example_load3 {
   def main(args: Array[String]): Unit = {
 
           val spark = SparkSession.builder().appName("hkProject").

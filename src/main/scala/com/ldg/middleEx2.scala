@@ -1,6 +1,6 @@
 package com.ldg
 
-object testttt {
+object middleEx2 {
 
   def main(args: Array[String]): Unit = {
 
