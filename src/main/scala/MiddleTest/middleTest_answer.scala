@@ -26,19 +26,19 @@
       //   2. Int   : myorder: section
       // output:
       //   1. Array : result of moving average
-      def movingAverage(targetData: Array[Double], myorder: Int): Array[Double] = {
-        val length = targetData.size
-        if (myorder > length || myorder <= 2) {
-          throw new IllegalArgumentException
-        } else {
-          var maResult = targetData.sliding(myorder).map(_.sum).map(_ / myorder)
-
-          if (myorder % 2 == 0) {
-            maResult = maResult.sliding(2).map(_.sum).map(_ / 2)
-          }
-          maResult.toArray
-        }
-      }
+//      def movingAverage(targetData: Array[Double], myorder: Int): Array[Double] = {
+//        val length = targetData.size
+//        if (myorder > length || myorder <= 2) {
+//          throw new IllegalArgumentException
+//        } else {
+//          var maResult = targetData.sliding(myorder).map(_.sum).map(_ / myorder)
+//
+//          if (myorder % 2 == 0) {
+//            maResult = maResult.sliding(2).map(_.sum).map(_ / 2)
+//          }
+//          maResult.toArray
+//        }
+//      }
 
       ////////////////////////////////////  Spark-session definition  ////////////////////////////////////
       var spark = SparkSession.builder().config("spark.master", "local").getOrCreate()
