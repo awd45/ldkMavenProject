@@ -103,12 +103,14 @@ object Example_mapRdd {
       (x.getString(keyNo))
     }).map(x => {
       //key 값
-      var key = x._1
+      var key1 = x._1
       //기본데이터
-      var data = x._2
+      var data1 = x._2
       //각종 살을 덫붙이는것
-      var dataSize = data.size
-      (key, dataSize)
+      var dataSize = data1.size
+      (key1, dataSize)
+
+      //groupRdd1.foreach(println) 하면 그룹맵핑된 결과나옴
 
       //출력 row 키정보, 연주차정보, 거래량 정보_org, 거래량 정보_new)
       // (거래처/상품) 0        1             2             3
@@ -119,13 +121,13 @@ object Example_mapRdd {
         (x.getString(keyNo))
       }).flatMap(x => {
         // key 값
-        var key = x._1
+        var key2 = x._1
         // 기본데이터
-        var data = x._2
+        var data2 = x._2
 
-        var dataSize = data.size
+        var dataSize = data2.size
 
-        var sumation = data.map(x => {
+        var sumation = data2.map(x => {
           x.getDouble(3)
         }).sum
 
@@ -135,7 +137,7 @@ object Example_mapRdd {
         } else {
           average = sumation / dataSize
         }
-        var outputData = data.map(x => {
+        var outputData = data2.map(x => {
           Row(x.getString(0), // key 정보 (거래처, 상품)
             x.getString(1), // 주차 정보(yearweek)
             x.getDouble(2), // original qty
@@ -145,7 +147,7 @@ object Example_mapRdd {
         })
         outputData
       })
-
+      //groupRdd1.foreach(println)하면 그냥 map과 flatmap의 차이를 알 수 있음
     })
   }
 }
