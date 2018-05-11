@@ -270,4 +270,3 @@ object Example_seasonality_final2 {
     }
   }
 
-}
