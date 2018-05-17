@@ -232,24 +232,44 @@ object spark_groupByQuiz {
     // 1~52주차가 남고 각연도별로 평균 값으로 최종 출력한다.
   }
 
-  //        var size = x._2.map(x=>{x.getDouble(qtyNo)}).size
-  //        var sumation = x._2.map(x=>{x.getDouble(qtyNo)}).sum
-  //        var average = 0.0d
-  //        if(size!=0){
-  //          average = sumation/size
-  //        }else{
-  //          average = 0
-  //        }
-  //        // Calculate 분산
-  //        var variance = x._2.map(x=>{math.pow((x.getDouble(qtyNo)-average),2)}).sum/(size-1)  ///average
-  //        // Calculate 표준편차
-  //        var stddev = math.sqrt(variance)
-  //        var mapResult = data.map(x=>{
-  //          (key,
-  //            size,
-  //            average,
-  //            stddev)
-  //        })
-  //        mapResult
+//          var size = x._2.map(x=>{x.getDouble(qtyNo)}).size
+//          var sumation = x._2.map(x=>{x.getDouble(qtyNo)}).sum
+//          var average = 0.0d
+//          if(size!=0){
+//            average = sumation/size
+//          }else{
+//            average = 0
+//          }
+//          // Calculate 분산
+//          var variance = x._2.map(x=>{math.pow((x.getDouble(qtyNo)-average),2)}).sum/(size-1)  ///average
+//          // Calculate 표준편차
+//          var stddev = math.sqrt(variance)
+//          var mapResult = data.map(x=>{
+//            (key,
+//              size,
+//              average,
+//              stddev)
+//          })
+//          mapResult
+
+// RDD -> dataframe으로 바꿔서 오라클 db에 write한다. 그럼 그 db를 시각화하면 끝
+  //seasonality_final2 참고하면 다있음
+
+  //iterable타입 map에서 하나로 들어가는 법은 .header로 값하나를 볼 수 있다.(map함수 디코딩하는범)
+
+//  structtype({)})
+
+
+//  dataframe A
+
+
+//  createTempView
+
+//  spark.sql group by week
+
+//  oracle---> db write
+
+// 정리: dataframe >> tempview >> group(week)->avg(ratio) >> output ->oracle에 DB로저장 >> visualization으로 시각화
+
 
 }
