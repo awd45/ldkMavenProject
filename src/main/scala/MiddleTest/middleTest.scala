@@ -48,6 +48,7 @@ object middleTest {
 
     //4번답 [정제] 2016년도 이상, 52주차 미포함, 프로덕트 정보가 (PRODUCT1, PRODCUT2)인 데이터만 남기는 코드를
     //작성한 후 코드시작부분에 주석처리만 하세요
+
     var rawData = middleResult
     var rawDataColumns = rawData.columns.map(x=>{x.toLowerCase()})
 

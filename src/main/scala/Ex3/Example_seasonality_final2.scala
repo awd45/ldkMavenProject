@@ -93,6 +93,7 @@ object Example_seasonality_final2 {
       //      "cast(qty as double) as qty," +
       //      "cast(target as double) as target," +
       //      "idx from selloutTable where 1=1"
+    // 여기서 qty가 string형이다 아래에서 형변환
       var rawData = spark.sql("select concat(a.regionid,'_',a.product) as keycol," +
         "a.regionid as accountid," +
         "a.product," +
@@ -111,6 +112,10 @@ object Example_seasonality_final2 {
       var productnameNo = rawDataColumns.indexOf("productname")
 
       var rawRdd = rawData.rdd
+
+    ///Rdd조회하려면
+      rawData.take(3).foreach(println);
+      rawData.collect.toArray.foreach(println);
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////  Data Filtering         ////////////////////////////////////////
