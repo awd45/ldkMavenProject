@@ -210,6 +210,7 @@ object lastTerm{
     var middleResult = groupRdd2.toDF("REGIONID","PRODUCT","YEARWEEK","QTY","AVG_QTY","RATIO")
     println(middleResult.show)
 
+    middleResult.createOrReplaceTempView("FINALTABLE")
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // 8. Exam #3
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,8 +228,12 @@ object lastTerm{
     // var  finalResult = spark.sql("select.....")
     // output: (accountid, product, week, avg_ratio)
 
-    var finalResult=spark.sql("SELECT REGIONID,PRODUCT,SUBSTR(YEARWEEK,-2) AS WEEK,AVG(RATIO)AS  RATIO" + " FROM MIDDLETABLE" + "GROUP BY REGIONID, PRODUCT")
-    finalResult.createOrReplaceTempView("FINALTABLE")
+    var finalResult=spark.sql(""+
+      "SELECT REGIONID,PRODUCT,SUBSTR(YEARWEEK,-2) AS WEEK,AVG(RATIO)AS  RATIO" +
+      " FROM MIDDLETABLE" +
+      "GROUP BY REGIONID, PRODUCT, SUBSTR(YEARWEEK,5,6")
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // 9. Data unloading (memory -> oracle)
     //////////////////////////////////////////////////////////////////////////////////////////////////
