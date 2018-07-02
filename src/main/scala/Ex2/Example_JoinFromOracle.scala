@@ -5,8 +5,6 @@ import org.apache.spark.sql.SparkSession
 object Example_JoinFromOracle {
   def main(args: Array[String]): Unit = {
 
-    package com.haiteam
-
 
 
     object Seasonality {

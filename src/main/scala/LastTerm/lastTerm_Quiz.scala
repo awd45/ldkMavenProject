@@ -3,7 +3,7 @@ package LastTerm
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.types.DoubleType
 
-object lastTerm_Quize {
+object lastTerm_Quiz {
   def main(args: Array[String]): Unit = {
 
     import org.apache.spark.sql.SparkSession

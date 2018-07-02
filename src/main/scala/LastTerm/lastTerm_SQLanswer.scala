@@ -2,7 +2,7 @@ package LastTerm
 
 import org.apache.spark.{SparkConf, SparkContext}
 
-object lastTerm_answer2 {
+object lastTerm_SQLanswer {
   def main(args: Array[String]): Unit = {
     import org.apache.spark.sql.SparkSession
     import scala.collection.mutable.ArrayBuffer

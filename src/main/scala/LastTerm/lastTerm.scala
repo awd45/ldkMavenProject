@@ -49,6 +49,8 @@ object lastTerm{
       "cast(a.qty as String) as qty, " +
       "'test' as productname from keydata a" )
 
+//    rawData.show()
+
     var rawDataColumns = rawData.columns
     var keyNo = rawDataColumns.indexOf("keycol")
     var accountidNo = rawDataColumns.indexOf("accountid")
@@ -58,6 +60,7 @@ object lastTerm{
     var productnameNo = rawDataColumns.indexOf("productname")
 
     var rawRdd = rawData.rdd
+//    rawRdd.take(3).foreach(println)
 
     // Global Variables //
     var VALID_YEAR = 2015
@@ -87,6 +90,8 @@ object lastTerm{
       }
       checkValid
     })
+
+    // filterRdd.take(3).foreach(println)
     // output: key, account, product, yearweek, qty, productname
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,13 +100,18 @@ object lastTerm{
     var mapRdd = filterRdd.map(x=>{
       var qty = x.getString(qtyNo).toDouble
       if(qty > MAX_QTY_VALUE){qty = MAX_QTY_VALUE}
-      Row( x.getString(keyNo),
+      Row(x.getString(keyNo),
         x.getString(accountidNo),
         x.getString(productNo),
         x.getString(yearweekNo),
         qty, //x.getString(qtyNo),
         x.getString(productnameNo))
     })
+//   // 디버깅
+//    var mapexRdd = filterRdd
+//    var x = mapexRdd.first
+
+    //    mapRdd.take(3).foreach(println)
     // output: key, account, product, yearweek, qty, productname
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,12 +141,13 @@ object lastTerm{
           average = 0.0d
         } else {
           average = sumation / dataSize
-
         }
 
         // (KEY, VALUE)로 출력합니다
         (key,avg)
       })
+
+//    groupRdd1.take(3).foreach(println)
     // output: (key, avg)
 
     // 다풀고 심심하면 아래문구 실행해보세요 보세요
