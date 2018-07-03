@@ -110,18 +110,20 @@ import org.apache.spark.sql.types.DoubleType
       var groupRdd1 = mapRdd.
         groupBy(x=>{ (x.getString(accountidNo),
           x.getString(productNo))}).
-        map(x=>{
+        map(x=> {
           // GROUP BY 키값과 데이터를 정의하세요
           var key = x._1
           var data = x._2
 
           // 평균을 구하세요
-          var sum_qty = data.map(x=>{x.getDouble(qtyNo)}).sum
+          var sum_qty = data.map(x => {
+            x.getDouble(qtyNo)
+          }).sum
           var size = data.size
-          var avg = Math.round(sum_qty/size)
+          var avg = Math.round(sum_qty / size)
 
           // (KEY, VALUE)로
-          (key,avg)
+          (key, avg)
         })
 //        }).collectAsMap
 
