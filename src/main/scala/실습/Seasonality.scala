@@ -182,7 +182,7 @@ object Seasonality {
 
       // 위의 정제된 RDD를 그룹핑한다.
       var groupRddMapExp = mapRdd.
-        groupBy(x=>{ (x.getString(keyNo), x.getString(accountidNo)) }).
+        groupBy(x=>{ (x.getString(keyNo), x.getString(yearweekNo)) }).
         flatMap(x=>{
 
           // key = (A21_PRODUCT1,A21)

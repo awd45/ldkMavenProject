@@ -147,46 +147,46 @@ object spark_groupbyDetail {
           x.getString(productnameNo))
       })
 
-      var groupRddMapAnswer2 = mapRdd.
-        groupBy(x=>{ (x.getString(keyNo)) }).
-        // map/flatmap
-        flatMap(x=>{
-        // 기본 데이터 설정
-        var key = x._1
-        var data = x._2
-        var size = x._2.size
-        var qty = x._2.map(x=>{x.getDouble(qtyNo)}).toArray
-
-        // 평균, 표준편차 계산
-        var average = StdStats.mean(qty)
-        var stddev = StdStats.stddev(qty)
-
-        // 결과 출력
-        var mapResult = data.map(x=>{
-          (key,
-            size,
-            average,
-            stddev)
-        })
-        mapResult
-      })
-
-      var groupRddMapAnswer1 = mapRdd.
-        groupBy(x=>{ (x.getString(keyNo)) }).
-        // map/flatmap
-        map(x=>{
-        // 기본 데이터 설정
-        var key = x._1
-        var data = x._2
-        var size = x._2.size
-        var qty = x._2.map(x=>{x.getDouble(qtyNo)}).toArray
-
-        // 평균, 표준편차 계산
-        var average = StdStats.mean(qty)
-        var stddev = StdStats.stddev(qty)
-
-        (key,(size,average,stddev))
-      })
+//      var groupRddMapAnswer2 = mapRdd.
+//        groupBy(x=>{ (x.getString(keyNo)) }).
+//        // map/flatmap
+//        flatMap(x=>{
+//        // 기본 데이터 설정
+//        var key = x._1
+//        var data = x._2
+//        var size = x._2.size
+//        var qty = x._2.map(x=>{x.getDouble(qtyNo)}).toArray
+//
+//        // 평균, 표준편차 계산
+//        var average = StdStats.mean(qty)
+//        var stddev = StdStats.stddev(qty)
+//
+//        // 결과 출력
+//        var mapResult = data.map(x=>{
+//          (key,
+//            size,
+//            average,
+//            stddev)
+//        })
+//        mapResult
+//      })
+//
+//      var groupRddMapAnswer1 = mapRdd.
+//        groupBy(x=>{ (x.getString(keyNo)) }).
+//        // map/flatmap
+//        map(x=>{
+//        // 기본 데이터 설정
+//        var key = x._1
+//        var data = x._2
+//        var size = x._2.size
+//        var qty = x._2.map(x=>{x.getDouble(qtyNo)}).toArray
+//
+//        // 평균, 표준편차 계산
+//        var average = StdStats.mean(qty)
+//        var stddev = StdStats.stddev(qty)
+//
+//        (key,(size,average,stddev))
+//      })
 
       var groupRddMapAnswer3 = mapRdd.
         groupBy(x=>{ (x.getString(keyNo)) }).
