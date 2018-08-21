@@ -342,9 +342,3 @@ object makeSeasonality {
     println("Seasonality model completed, Data Inserted in Oracle DB")
   }
 }
-
-,STDDEDV(MA)
-OVER (PARTITION BY REGIONID, PRODUCT
-ORDER BY REGIONID, PRODUCT, YEARWEEK
-ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING)
-AS STDDEDV)
